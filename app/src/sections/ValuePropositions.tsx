@@ -1,31 +1,12 @@
 import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Clock, ShieldCheck, Wallet, Truck } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, ScrollTrigger, prefersReducedMotion } from '../lib/gsap';
 
 const values = [
-  {
-    icon: Clock,
-    title: 'On Short Notice',
-    description: 'Last-minute booking availability across all London boroughs. Our flexible team is ready to help, even with minimal notice.',
-  },
-  {
-    icon: ShieldCheck,
-    title: '100% Insurance',
-    description: 'Complete peace of mind with Goods in Transit & Public Liability protection. Fully covered from door to door.',
-  },
-  {
-    icon: Wallet,
-    title: 'Honest Pricing',
-    description: 'Charges start when the van arrives at your address. No hidden petrol, VAT, or surprise fees.',
-  },
-  {
-    icon: Truck,
-    title: 'Fully Equipped',
-    description: 'Every vehicle has protective blankets, heavy-duty trolleys, strapping systems, and GPS tracking.',
-  },
+  { icon: Clock, title: 'Ready on short notice', description: 'Last-minute availability across every London borough. Flexible crews mobilise fast — even same day.' },
+  { icon: ShieldCheck, title: 'Insured, door to door', description: 'Goods in Transit and Public Liability cover as standard. Complete peace of mind from packing to placement.' },
+  { icon: Wallet, title: 'Honest, fixed pricing', description: 'The clock starts when we arrive. No hidden fuel, VAT surprises, or creeping hourly charges.' },
+  { icon: Truck, title: 'Properly equipped', description: 'Every van carries blankets, trolleys, strapping and GPS tracking. The right kit for a careful move.' },
 ];
 
 export default function ValuePropositions() {
@@ -33,49 +14,71 @@ export default function ValuePropositions() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.vp-overline', { opacity: 0, y: 20 }, {
-        opacity: 1, y: 0, duration: 0.6, ease: 'expo.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 85%' },
+      if (prefersReducedMotion()) {
+        gsap.set('.vp-reveal', { opacity: 1, y: 0 });
+        return;
+      }
+      gsap.from('.vp-head > *', {
+        opacity: 0, y: 28, duration: 0.9, ease: 'expo.out', stagger: 0.12,
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' },
       });
-      gsap.fromTo('.vp-heading', { opacity: 0, y: 30 }, {
-        opacity: 1, y: 0, duration: 0.7, ease: 'expo.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 85%' }, delay: 0.12,
+      gsap.utils.toArray<HTMLElement>('.vp-row').forEach((row) => {
+        gsap.from(row, {
+          opacity: 0, y: 40, duration: 1, ease: 'expo.out',
+          scrollTrigger: { trigger: row, start: 'top 86%' },
+        });
+        const line = row.querySelector('.vp-line');
+        if (line) {
+          gsap.from(line, {
+            scaleX: 0, transformOrigin: 'left', duration: 1.1, ease: 'expo.out',
+            scrollTrigger: { trigger: row, start: 'top 86%' },
+          });
+        }
       });
-      gsap.fromTo('.vp-card', { opacity: 0, y: 30, scale: 0.97 }, {
-        opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.08, ease: 'expo.out',
-        scrollTrigger: { trigger: '.vp-grid', start: 'top 85%' },
-      });
+      ScrollTrigger.refresh();
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-cream-50 py-16 md:py-24 lg:py-28">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-        <div className="text-center mb-10 md:mb-14">
-          <p className="vp-overline opacity-0 text-gold-500 text-xs font-medium uppercase tracking-[0.08em] mb-3">
-            WHY CHOOSE PABI REMOVALS
-          </p>
-          <h2 className="vp-heading opacity-0 text-charcoal-900 font-bold tracking-[-0.02em] text-2xl sm:text-3xl md:text-4xl lg:text-[3.5rem]" style={{ lineHeight: 1.05 }}>
-            The Pabi Advantage
-          </h2>
+    <section ref={sectionRef} className="bg-cream-50 py-24 md:py-36">
+      <div className="max-w-[1320px] mx-auto px-5 md:px-8 grid lg:grid-cols-12 gap-12 lg:gap-16">
+        {/* Sticky editorial heading */}
+        <div className="lg:col-span-5">
+          <div className="lg:sticky lg:top-28 vp-head">
+            <div className="eyebrow text-gold-600 mb-5">
+              <span className="h-px w-8 bg-gold-600" />
+              Why Pabi
+            </div>
+            <h2 className="font-display font-semibold text-navy-900 leading-[1.0] tracking-[-0.02em]"
+                style={{ fontSize: 'clamp(2.2rem, 4.5vw, 4rem)' }}>
+              The difference is in the detail.
+            </h2>
+            <p className="text-charcoal-500 text-base md:text-lg leading-relaxed mt-6 max-w-[42ch]">
+              Moving is stressful enough. We've spent fifteen years removing every
+              avoidable worry — so the day itself feels calm, considered, and quietly impressive.
+            </p>
+          </div>
         </div>
 
-        <div className="vp-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
-          {values.map((item) => (
-            <div
-              key={item.title}
-              className="vp-card opacity-0 bg-white border border-[#0A1628]/[0.06] rounded-xl p-5 md:p-6 lg:p-8 shadow-card hover:shadow-card-hover hover:-translate-y-1 hover:border-gold-500/20 transition-all duration-300 group"
-            >
-              <div className="mb-4 transition-transform duration-300 group-hover:scale-105">
-                <item.icon size={36} className="text-gold-500 md:w-10 md:h-10" strokeWidth={1.5} />
+        {/* Advantage rows */}
+        <div className="lg:col-span-7">
+          {values.map((item, i) => (
+            <div key={item.title} className="vp-row vp-reveal py-9 first:pt-0">
+              <div className="vp-line h-px w-full bg-navy-900/12 mb-9 first:hidden" />
+              <div className="flex items-start gap-6 md:gap-8">
+                <span className="font-display text-gold-500 leading-none shrink-0 tnum"
+                      style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>
+                  0{i + 1}
+                </span>
+                <div className="pt-1">
+                  <div className="flex items-center gap-3 mb-2.5">
+                    <item.icon size={22} className="text-navy-900" strokeWidth={1.6} />
+                    <h3 className="font-display text-navy-900 text-2xl md:text-[1.7rem] font-medium">{item.title}</h3>
+                  </div>
+                  <p className="text-charcoal-500 text-base leading-relaxed max-w-[52ch]">{item.description}</p>
+                </div>
               </div>
-              <h3 className="text-charcoal-900 font-semibold text-base md:text-lg mb-2">
-                {item.title}
-              </h3>
-              <p className="text-charcoal-500 text-sm leading-relaxed">
-                {item.description}
-              </p>
             </div>
           ))}
         </div>
