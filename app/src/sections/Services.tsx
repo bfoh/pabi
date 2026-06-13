@@ -75,8 +75,8 @@ export default function Services() {
   const activeService = services[activeTab];
 
   return (
-    <section id="services" ref={sectionRef} className="relative py-16 md:py-24 lg:py-28">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 rounded-3xl bg-navy-900/70 backdrop-blur-md border border-white/10 p-6 sm:p-8 md:p-10">
+    <section id="services" ref={sectionRef} className="bg-navy-900 py-16 md:py-24 lg:py-28">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         <p className="svc-overline opacity-0 text-gold-500 text-xs font-medium uppercase tracking-[0.08em] mb-3">
           OUR SERVICES
         </p>

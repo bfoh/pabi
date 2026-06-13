@@ -40,8 +40,8 @@ export default function HowItWorks() {
   }, []);
 
   return (
-    <section id="how-it-works" ref={sectionRef} className="relative py-16 md:py-24 lg:py-28">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 rounded-3xl bg-cream-50/80 backdrop-blur-md border border-white/60 p-6 sm:p-8 md:p-10 shadow-card">
+    <section id="how-it-works" ref={sectionRef} className="bg-cream-50 py-16 md:py-24 lg:py-28">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         <div className="text-center mb-10 md:mb-16">
           <p className="hiw-overline opacity-0 text-gold-500 text-xs font-medium uppercase tracking-[0.08em] mb-3">
             HOW IT WORKS

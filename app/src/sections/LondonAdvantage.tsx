@@ -61,8 +61,12 @@ export default function LondonAdvantage() {
   }, []);
 
   return (
-    <section id="areas" ref={sectionRef} className="relative py-16 md:py-24 lg:py-28 overflow-hidden">
-      <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 rounded-3xl bg-navy-900/70 backdrop-blur-md border border-white/10 p-6 sm:p-8 md:p-10">
+    <section id="areas" ref={sectionRef} className="relative bg-navy-900 py-16 md:py-24 lg:py-28 overflow-hidden">
+      <div
+        className="absolute inset-0 opacity-[0.1]"
+        style={{ backgroundImage: 'url(/images/london-skyline.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}
+      />
+      <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6">
         <div className="flex flex-col lg:flex-row lg:items-start gap-10 lg:gap-16">
           {/* Text block */}
           <div className="lg:w-1/2">

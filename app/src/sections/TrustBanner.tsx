@@ -60,8 +60,8 @@ export default function TrustBanner() {
   }, []);
 
   return (
-    <section id="pricing" ref={sectionRef} className="relative py-14 md:py-20 lg:py-24">
-      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 text-center rounded-3xl bg-navy-800/75 backdrop-blur-md border border-white/10 p-6 sm:p-8 md:p-12">
+    <section id="pricing" ref={sectionRef} className="bg-navy-800 py-14 md:py-20 lg:py-24">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 text-center">
         <h2 className="tb-heading opacity-0 text-white font-bold tracking-[-0.02em] text-2xl sm:text-3xl md:text-4xl lg:text-[3.5rem] mb-4 md:mb-5" style={{ lineHeight: 1.05 }}>
           Join 2,500+ Happy Londoners
         </h2>

@@ -1,10 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ChevronDown, Star, ArrowLeft } from 'lucide-react';
 import { scrollToSection } from '../lib/scroll';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Hero() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const calcRef = useRef<HTMLDivElement>(null);
   const scrollHintRef = useRef<HTMLDivElement>(null);
   const [calcStep, setCalcStep] = useState(0);
@@ -24,9 +29,23 @@ export default function Hero() {
         .fromTo('.hero-trust', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, '-=0.2')
         .fromTo(scrollHintRef.current, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, '-=0.1');
 
-      // Sticky video fade removed; the global SceneBackdrop/VanJourney handle the scene.
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top top',
+        end: '80% top',
+        scrub: true,
+        onUpdate: (self) => {
+          if (stickyRef.current) stickyRef.current.style.opacity = String(1 - self.progress);
+        },
+      });
     }, sectionRef);
     return () => ctx.revert();
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.play().catch(() => {});
   }, []);
 
   const handleNextStep = () => {
@@ -36,14 +55,16 @@ export default function Hero() {
   const handlePrevStep = () => { if (calcStep > 0) setCalcStep(calcStep - 1); };
 
   return (
-    <section id="hero" ref={sectionRef} className="relative min-h-[100dvh]">
-      <div className="relative min-h-[100dvh] w-full overflow-hidden">
-        {/* Left-side scrim for headline readability over the moving scene */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0A1628]/75 via-[#0A1628]/30 to-transparent" />
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#0A1628]/80 to-transparent" />
+    <section id="hero" ref={sectionRef} className="relative bg-navy-900" style={{ height: 'clamp(220vh, 260vh, 300vh)' }}>
+      <div ref={stickyRef} className="sticky top-0 h-[100dvh] w-full overflow-hidden">
+        {/* Video */}
+        <video ref={videoRef} className="absolute inset-0 w-full h-full object-cover" src="/videos/hero-video.mp4" autoPlay muted loop playsInline preload="auto" poster="/images/service-house-removals-hero.jpg" />
+        {/* Overlays for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0A1628]/70 via-[#0A1628]/50 to-[#0A1628]/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0A1628]/60 via-transparent to-transparent" />
 
         {/* Content */}
-        <div className="relative z-10 min-h-[100dvh] flex flex-col justify-end pt-24">
+        <div className="relative z-10 h-full flex flex-col justify-end">
           <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 pb-6 sm:pb-10 md:pb-14">
             <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between md:gap-8 lg:gap-12">
 

@@ -50,13 +50,13 @@ export default function ValuePropositions() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-16 md:py-24 lg:py-28">
+    <section ref={sectionRef} className="bg-cream-50 py-16 md:py-24 lg:py-28">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         <div className="text-center mb-10 md:mb-14">
           <p className="vp-overline opacity-0 text-gold-500 text-xs font-medium uppercase tracking-[0.08em] mb-3">
             WHY CHOOSE PABI REMOVALS
           </p>
-          <h2 className="vp-heading opacity-0 text-charcoal-900 font-bold tracking-[-0.02em] text-2xl sm:text-3xl md:text-4xl lg:text-[3.5rem] drop-shadow-[0_1px_12px_rgba(255,255,255,0.6)]" style={{ lineHeight: 1.05 }}>
+          <h2 className="vp-heading opacity-0 text-charcoal-900 font-bold tracking-[-0.02em] text-2xl sm:text-3xl md:text-4xl lg:text-[3.5rem]" style={{ lineHeight: 1.05 }}>
             The Pabi Advantage
           </h2>
         </div>
@@ -65,7 +65,7 @@ export default function ValuePropositions() {
           {values.map((item) => (
             <div
               key={item.title}
-              className="vp-card opacity-0 bg-white/80 backdrop-blur-md border border-white/60 rounded-xl p-5 md:p-6 lg:p-8 shadow-card hover:shadow-card-hover hover:-translate-y-1 hover:border-gold-500/30 transition-all duration-300 group"
+              className="vp-card opacity-0 bg-white border border-[#0A1628]/[0.06] rounded-xl p-5 md:p-6 lg:p-8 shadow-card hover:shadow-card-hover hover:-translate-y-1 hover:border-gold-500/20 transition-all duration-300 group"
             >
               <div className="mb-4 transition-transform duration-300 group-hover:scale-105">
                 <item.icon size={36} className="text-gold-500 md:w-10 md:h-10" strokeWidth={1.5} />
