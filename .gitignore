@@ -1,0 +1,8 @@
+# OS
+.DS_Store
+
+# Dependencies / build (also covered in app/.gitignore)
+node_modules
+dist
+*.log
+*.local
