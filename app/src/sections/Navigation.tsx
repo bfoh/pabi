@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Phone, Menu, X, ArrowUpRight } from 'lucide-react';
 import { scrollToSection, scrollToTop } from '../lib/scroll';
 import { useMagnetic } from '../hooks/use-magnetic';
+import Logo from '../components/Logo';
 
 const navLinks = [
   { label: 'Services', href: '#services' },
@@ -38,12 +39,8 @@ export default function Navigation() {
       >
         <div className="w-full max-w-[1320px] mx-auto px-5 md:px-8 flex items-center justify-between">
           {/* Logo */}
-          <button onClick={scrollToTop} className="shrink-0 cursor-pointer flex items-center gap-2.5 group">
-            <img
-              src="/images/logo.png"
-              alt="Pabi Removals Ltd"
-              className="h-9 md:h-10 w-auto brightness-0 invert transition-transform duration-500 group-hover:scale-[1.03]"
-            />
+          <button onClick={scrollToTop} className="shrink-0 cursor-pointer flex items-center group" aria-label="Pabi Removals — home">
+            <Logo className="h-11 md:h-[52px] w-auto transition-transform duration-500 group-hover:scale-[1.03]" />
           </button>
 
           {/* Desktop Nav Links */}

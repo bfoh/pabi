@@ -1,5 +1,6 @@
 import { Phone, Mail, Clock, MapPin, Facebook, Instagram, Twitter } from 'lucide-react';
 import { scrollToSection, scrollToTop } from '../lib/scroll';
+import Logo from '../components/Logo';
 
 const serviceLinks = [
   { label: 'House Removals', href: '#services' },
@@ -28,8 +29,8 @@ export default function Footer() {
         {/* Top: brand statement */}
         <div className="grid lg:grid-cols-12 gap-12 pb-16 border-b border-white/10">
           <div className="lg:col-span-5">
-            <button onClick={scrollToTop} className="inline-block mb-6 cursor-pointer">
-              <img src="/images/logo.png" alt="Pabi Removals Ltd" className="h-14 w-auto brightness-0 invert" />
+            <button onClick={scrollToTop} className="inline-block mb-6 cursor-pointer" aria-label="Pabi Removals — back to top">
+              <Logo className="h-14 md:h-[60px] w-auto" />
             </button>
             <p className="font-display text-white text-2xl md:text-3xl leading-snug max-w-[20ch]">
               Premium removals across all 32 London boroughs.
