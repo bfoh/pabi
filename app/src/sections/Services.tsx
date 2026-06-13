@@ -3,6 +3,8 @@ import { gsap, ScrollTrigger, prefersReducedMotion } from '../lib/gsap';
 import { Home, Truck, Building2, Package, Check, ArrowUpRight, ChevronDown } from 'lucide-react';
 import { scrollToSection } from '../lib/scroll';
 
+const AUTO_MS = 4600;
+
 const services = [
   {
     id: 'house', icon: Home, title: 'House Removals', shortDesc: 'Full-scale residential relocation',
@@ -32,35 +34,37 @@ const services = [
 
 export default function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState(0);
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const [paused, setPaused] = useState(false);
 
+  // Heading reveal.
   useEffect(() => {
     const ctx = gsap.context(() => {
       if (prefersReducedMotion()) {
         gsap.set('.svc-head > *', { opacity: 1, y: 0 });
-        return;
+      } else {
+        gsap.from('.svc-head > *', {
+          opacity: 0, y: 28, duration: 0.9, ease: 'expo.out', stagger: 0.12,
+          scrollTrigger: { trigger: sectionRef.current, start: 'top 78%' },
+        });
       }
-      gsap.from('.svc-head > *', {
-        opacity: 0, y: 28, duration: 0.9, ease: 'expo.out', stagger: 0.12,
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 78%' },
-      });
       ScrollTrigger.refresh();
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
-  const handleTabChange = (index: number) => {
-    setActiveTab(index);
-    if (!prefersReducedMotion()) {
-      if (imageRef.current) gsap.fromTo(imageRef.current, { clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)', duration: 0.7, ease: 'expo.out' });
-      if (contentRef.current) gsap.fromTo(contentRef.current, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' });
-    }
-  };
+  // Auto-advance through services unless paused (hover) or reduced motion.
+  useEffect(() => {
+    if (prefersReducedMotion() || paused) return;
+    const id = window.setTimeout(() => {
+      setActiveTab((t) => (t + 1) % services.length);
+    }, AUTO_MS);
+    return () => window.clearTimeout(id);
+  }, [activeTab, paused]);
 
   const active = services[activeTab];
+  const autoRunning = !paused && !prefersReducedMotion();
 
   return (
     <section id="services" ref={sectionRef} className="bg-navy-900 py-16 md:py-36 overflow-hidden">
@@ -76,40 +80,78 @@ export default function Services() {
           </h2>
         </div>
 
-        {/* Desktop: editorial split */}
-        <div className="hidden lg:grid grid-cols-12 gap-14 items-start">
+        {/* Desktop: editorial split with auto-cycling crossfade */}
+        <div
+          className="hidden lg:grid grid-cols-12 gap-14 items-center"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
           {/* List */}
           <div className="col-span-5">
-            {services.map((service, index) => (
-              <button
-                key={service.id}
-                onClick={() => handleTabChange(index)}
-                className="group w-full text-left py-6 border-t border-white/10 last:border-b transition-colors"
-              >
-                <div className="flex items-center gap-5">
-                  <span className={`font-display text-2xl tnum transition-colors ${index === activeTab ? 'text-gold-500' : 'text-white/25'}`}>0{index + 1}</span>
-                  <div className="flex-1">
-                    <h3 className={`font-display text-2xl font-medium transition-colors ${index === activeTab ? 'text-white' : 'text-white/45 group-hover:text-white/70'}`}>
-                      {service.title}
-                    </h3>
-                    <p className={`text-sm mt-0.5 transition-colors ${index === activeTab ? 'text-white/55' : 'text-white/25'}`}>{service.shortDesc}</p>
+            {services.map((service, index) => {
+              const isActive = index === activeTab;
+              return (
+                <button
+                  key={service.id}
+                  onClick={() => setActiveTab(index)}
+                  className="group w-full text-left pt-6 border-t border-white/10 last:pb-0"
+                >
+                  <div className="flex items-center gap-5 pb-6">
+                    <span className={`font-display text-2xl tnum transition-colors duration-500 ${isActive ? 'text-gold-500' : 'text-white/25'}`}>0{index + 1}</span>
+                    <div className="flex-1">
+                      <h3 className={`font-display text-2xl font-medium transition-colors duration-500 ${isActive ? 'text-white' : 'text-white/45 group-hover:text-white/70'}`}>
+                        {service.title}
+                      </h3>
+                      <p className={`text-sm mt-0.5 transition-colors duration-500 ${isActive ? 'text-white/55' : 'text-white/25'}`}>{service.shortDesc}</p>
+                    </div>
+                    <ArrowUpRight size={20} className={`transition-all duration-500 ${isActive ? 'text-gold-500 opacity-100' : 'text-white/30 opacity-0 group-hover:opacity-100'}`} />
                   </div>
-                  <ArrowUpRight size={20} className={`transition-all duration-300 ${index === activeTab ? 'text-gold-500 opacity-100' : 'text-white/30 opacity-0 group-hover:opacity-100'}`} />
-                </div>
-              </button>
-            ))}
+                  {/* Progress / active indicator */}
+                  <div className="h-[2px] w-full bg-white/10 overflow-hidden -mt-px">
+                    {isActive && (
+                      <div
+                        key={`${activeTab}-${autoRunning}`}
+                        className="h-full bg-gold-500 origin-left"
+                        style={
+                          autoRunning
+                            ? { animation: `svcProgress ${AUTO_MS}ms linear forwards` }
+                            : { transform: 'scaleX(1)' }
+                        }
+                      />
+                    )}
+                  </div>
+                </button>
+              );
+            })}
           </div>
 
-          {/* Detail */}
+          {/* Detail: stacked crossfading images */}
           <div className="col-span-7">
-            <div className="relative rounded-[1.4rem] overflow-hidden">
-              <div ref={imageRef}>
-                <img src={active.image} alt={active.title} className="w-full aspect-[16/11] object-cover" data-speed="0.92" />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-900/55 to-transparent pointer-events-none" />
-              <span className="absolute top-5 left-5 eyebrow text-white/80 bg-navy-900/40 backdrop-blur px-3 py-1.5 rounded-full">Pabi · {active.title}</span>
+            <div className="relative rounded-[1.4rem] overflow-hidden aspect-[16/11] bg-navy-800">
+              {services.map((service, index) => (
+                <div
+                  key={service.id}
+                  className="absolute inset-0 transition-opacity ease-out"
+                  style={{ opacity: index === activeTab ? 1 : 0, transitionDuration: '1100ms' }}
+                  aria-hidden={index !== activeTab}
+                >
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover"
+                    style={index === activeTab && !prefersReducedMotion() ? { animation: 'svcKenburns 6000ms ease-out both' } : undefined}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                  />
+                </div>
+              ))}
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-900/60 via-transparent to-navy-900/10 pointer-events-none" />
+              <span className="absolute top-5 left-5 eyebrow text-white/85 bg-navy-900/40 backdrop-blur px-3 py-1.5 rounded-full">
+                Pabi · {active.title}
+              </span>
             </div>
-            <div ref={contentRef} className="mt-7">
+
+            {/* Text crossfades on change (keyed remount) */}
+            <div key={activeTab} className="mt-7" style={prefersReducedMotion() ? undefined : { animation: 'svcTextIn 0.7s cubic-bezier(0.22,1,0.36,1) both' }}>
               <p className="text-white/80 text-lg leading-relaxed max-w-[58ch]">{active.description}</p>
               <ul className="grid grid-cols-2 gap-x-8 gap-y-3 mt-7">
                 {active.features.map((f) => (
@@ -152,6 +194,12 @@ export default function Services() {
           ))}
         </div>
       </div>
+
+      <style>{`
+        @keyframes svcProgress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+        @keyframes svcKenburns { from { transform: scale(1.08); } to { transform: scale(1); } }
+        @keyframes svcTextIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+      `}</style>
     </section>
   );
 }
