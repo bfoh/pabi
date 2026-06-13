@@ -65,9 +65,9 @@ export default function HowItWorks() {
   }, []);
 
   return (
-    <section id="how-it-works" ref={sectionRef} className="bg-cream-50 py-24 md:py-36">
+    <section id="how-it-works" ref={sectionRef} className="bg-cream-50 py-16 md:py-36">
       <div className="max-w-[1320px] mx-auto px-5 md:px-8">
-        <div className="hiw-head max-w-[60ch] mb-14 md:mb-24">
+        <div className="hiw-head max-w-[60ch] mb-10 md:mb-24">
           <div className="eyebrow text-gold-600 mb-5">
             <span className="h-px w-8 bg-gold-600" />
             How it works

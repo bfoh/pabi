@@ -73,24 +73,24 @@ export default function Hero() {
                 style={{ fontSize: 'clamp(2.6rem, 7vw, 6rem)' }}>
               Moving London<br />forward, with care.
             </h1>
-            <p className="hero-sub hero-anim max-w-[44ch] text-white/75 text-base md:text-lg leading-relaxed mt-7">
+            <p className="hero-sub hero-anim max-w-[44ch] text-white/75 text-[0.95rem] md:text-lg leading-relaxed mt-5 md:mt-7">
               Fully insured home and office relocations across all 32 boroughs.
               Fixed, transparent pricing — and a team that treats your things like their own.
             </p>
-            <div className="hero-cta hero-anim flex flex-wrap items-center gap-3.5 mt-9">
+            <div className="hero-cta hero-anim flex flex-col sm:flex-row sm:items-center gap-3 mt-7 md:mt-9">
               <button
                 ref={ctaRef}
                 onClick={() => scrollToSection('#pricing')}
-                className="group inline-flex items-center gap-2 bg-gold-500 hover:bg-gold-400 text-navy-900 font-semibold text-sm pl-7 pr-5 py-4 rounded-full shadow-gold transition-colors duration-300"
+                className="group inline-flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-400 text-navy-900 font-semibold text-sm pl-7 pr-5 py-4 rounded-full shadow-gold transition-colors duration-300"
               >
                 Get your free quote
                 <ArrowUpRight size={17} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </button>
-              <a href="tel:07442805856" className="inline-flex items-center gap-2 text-white font-medium text-sm px-6 py-4 rounded-full border border-white/25 hover:bg-white/10 transition-colors duration-300">
+              <a href="tel:07442805856" className="inline-flex items-center justify-center gap-2 text-white font-medium text-sm px-6 py-4 rounded-full border border-white/25 hover:bg-white/10 transition-colors duration-300">
                 Call 07442 805856
               </a>
             </div>
-            <div className="hero-trust hero-anim flex items-center gap-2.5 mt-8 text-white/65 text-sm">
+            <div className="hero-trust hero-anim flex items-center gap-2.5 mt-6 md:mt-8 text-white/65 text-sm">
               <div className="flex">
                 {[0, 1, 2, 3, 4].map((i) => <Star key={i} size={15} className="text-gold-500 fill-gold-500" />)}
               </div>

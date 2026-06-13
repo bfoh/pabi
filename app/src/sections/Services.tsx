@@ -63,9 +63,9 @@ export default function Services() {
   const active = services[activeTab];
 
   return (
-    <section id="services" ref={sectionRef} className="bg-navy-900 py-24 md:py-36 overflow-hidden">
+    <section id="services" ref={sectionRef} className="bg-navy-900 py-16 md:py-36 overflow-hidden">
       <div className="max-w-[1320px] mx-auto px-5 md:px-8">
-        <div className="svc-head max-w-[60ch] mb-14 md:mb-20">
+        <div className="svc-head max-w-[60ch] mb-10 md:mb-20">
           <div className="eyebrow text-gold-500 mb-5">
             <span className="h-px w-8 bg-gold-500" />
             What we do

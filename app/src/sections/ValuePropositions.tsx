@@ -41,8 +41,8 @@ export default function ValuePropositions() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-cream-50 py-24 md:py-36">
-      <div className="max-w-[1320px] mx-auto px-5 md:px-8 grid lg:grid-cols-12 gap-12 lg:gap-16">
+    <section ref={sectionRef} className="bg-cream-50 py-16 md:py-36">
+      <div className="max-w-[1320px] mx-auto px-5 md:px-8 grid lg:grid-cols-12 gap-10 lg:gap-16">
         {/* Sticky editorial heading */}
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-28 vp-head">
@@ -64,8 +64,8 @@ export default function ValuePropositions() {
         {/* Advantage rows */}
         <div className="lg:col-span-7">
           {values.map((item, i) => (
-            <div key={item.title} className="vp-row vp-reveal py-9 first:pt-0">
-              <div className="vp-line h-px w-full bg-navy-900/12 mb-9 first:hidden" />
+            <div key={item.title} className="vp-row vp-reveal py-7 md:py-9 first:pt-0">
+              <div className="vp-line h-px w-full bg-navy-900/12 mb-7 md:mb-9 first:hidden" />
               <div className="flex items-start gap-6 md:gap-8">
                 <span className="font-display text-gold-500 leading-none shrink-0 tnum"
                       style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>

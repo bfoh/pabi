@@ -47,7 +47,7 @@ export default function TrustBanner() {
   }, []);
 
   return (
-    <section id="pricing" ref={sectionRef} className="relative bg-navy-900 py-24 md:py-36 overflow-hidden">
+    <section id="pricing" ref={sectionRef} className="relative bg-navy-900 py-16 md:py-36 overflow-hidden">
       {/* Subtle radial warmth */}
       <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/3 w-[80vw] h-[80vw] rounded-full pointer-events-none"
            style={{ background: 'radial-gradient(circle, rgba(200,150,62,0.14) 0%, rgba(200,150,62,0) 60%)' }} />
@@ -56,9 +56,9 @@ export default function TrustBanner() {
         <div className="tb-reveal eyebrow text-gold-500 justify-center mb-7">
           <span className="h-px w-8 bg-gold-500" /> Ready when you are
         </div>
-        <h2 className="tb-reveal font-display font-semibold text-white leading-[0.98] tracking-[-0.02em]"
-            style={{ fontSize: 'clamp(2.4rem, 6.5vw, 5.5rem)' }}>
-          Let's make your next<br />move the easy one.
+        <h2 className="tb-reveal font-display font-semibold text-white leading-[1.02] md:leading-[0.98] tracking-[-0.02em] text-balance"
+            style={{ fontSize: 'clamp(2rem, 6.5vw, 5.5rem)' }}>
+          Let's make your next <span className="hidden md:inline"><br /></span>move the easy one.
         </h2>
         <p className="tb-reveal text-white/70 text-lg md:text-xl leading-relaxed max-w-[58ch] mx-auto mt-7">
           From studio flats to family homes, thousands of Londoners have trusted Pabi.

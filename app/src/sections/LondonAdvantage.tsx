@@ -50,7 +50,7 @@ export default function LondonAdvantage() {
   }, []);
 
   return (
-    <section id="areas" ref={sectionRef} className="relative bg-navy-800 py-24 md:py-36 overflow-hidden">
+    <section id="areas" ref={sectionRef} className="relative bg-navy-800 py-16 md:py-36 overflow-hidden">
       <div className="absolute inset-0 opacity-[0.12]" data-speed="0.85"
            style={{ backgroundImage: 'url(/images/london-skyline.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
       <div className="absolute inset-0 bg-gradient-to-b from-navy-900/40 via-transparent to-navy-900/60" />
