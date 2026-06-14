@@ -26,16 +26,23 @@ export default function Logo({ className }: LogoProps) {
       />
 
       {/* Van mark */}
-      <g stroke="#C8963E" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" fill="none">
-        {/* cargo box + cab */}
-        <path d="M19 25 H37 V35 H17 V30 Q17 27 20 26 L21 25 Z" />
-        <path d="M37 28 H41 L44 31 V35 H37 Z" />
-        {/* ground line */}
-        <path d="M14 39 H46" strokeWidth="1.3" opacity="0.5" />
+      <g stroke="#C8963E" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" fill="none">
+        {/* body silhouette with integrated wheel arches */}
+        <path d="M15 33 V27 Q15 24.5 17.5 24.5 H23 L26 20.5 H43 Q45 20.5 45 23 V33 H42 A3 3 0 0 0 36 33 H25 A3 3 0 0 0 19 33 Z" />
+        {/* cab / cargo division */}
+        <path d="M26 21 V33" />
+        {/* cab window */}
+        <path d="M27.6 23 H31 V27 H27.6 Z" />
+        {/* door handle */}
+        <path d="M37.5 28 H40" />
       </g>
       {/* wheels */}
-      <circle cx="24" cy="35.5" r="2.6" fill="#C8963E" />
-      <circle cx="39" cy="35.5" r="2.6" fill="#C8963E" />
+      <g stroke="#C8963E" strokeWidth="1.8" fill="none">
+        <circle cx="22" cy="33" r="3" />
+        <circle cx="39" cy="33" r="3" />
+      </g>
+      <circle cx="22" cy="33" r="0.95" fill="#C8963E" />
+      <circle cx="39" cy="33" r="0.95" fill="#C8963E" />
 
       {/* Wordmark */}
       <text
